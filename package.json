@@ -1,0 +1,60 @@
+{
+    "name": "planificacion",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "engines": {
+        "node": "14.15.4"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node dist/server.js",
+        "startDev": "nodemon src/server.js --exec babel-node",
+        "build": "babel src/helpers --out-dir dist/helpers && babel src/middleware --out-dir dist/middleware && babel src/routes --out-dir dist/routes && babel src/server.js --out-dir dist"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.21.1",
+        "bcryptjs": "^2.4.3",
+        "bluebird": "^3.7.2",
+        "body-parser": "^1.18.3",
+        "bootstrap": "^4.5.3",
+        "connect-pg-simple": "^5.0.0",
+        "cookie-parser": "^1.4.5",
+        "crypto": "^1.0.1",
+        "ejs": "^2.7.4",
+        "empty": "^0.10.1",
+        "express": "^4.17.1",
+        "express-fileupload": "^1.2.1",
+        "express-session": "^1.17.1",
+        "fs": "^0.0.1-security",
+        "fs-extra": "^7.0.1",
+        "is-empty": "^1.2.0",
+        "jsonwebtoken": "^8.5.1",
+        "method-override": "^3.0.0",
+        "mime-types": "^2.1.28",
+        "morgan": "^1.10.0",
+        "multer": "^1.4.2",
+        "passport": "^0.4.1",
+        "passport-local-sequelize": "^0.8.0",
+        "path": "^0.12.7",
+        "pdfmake": "^0.1.70",
+        "pg": "^7.18.2",
+        "pg-hstore": "^2.3.3",
+        "pg-promise": "^10.9.1",
+        "rutjs": "^0.1.1",
+        "sequelize": "^4.44.4",
+        "sweetalert2": "^10.14.0",
+        "uniqid": "^5.2.0",
+        "validator": "^10.9.0",
+        "xhr2": "^0.2.1"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.16.0",
+        "@babel/core": "^7.16.5",
+        "@babel/node": "^7.16.5",
+        "@babel/preset-env": "^7.16.5",
+        "nodemon": "^1.19.4"
+    }
+}

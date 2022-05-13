@@ -1,0 +1,18 @@
+
+#map-template{
+  height: 30%;
+  width: 98%;
+  position: absolute;
+  bottom: 150px;
+  right: 10px;
+  border: 3px solid rgb(3, 25, 87);
+    
+  
+  
+  }
+  #Magnitud {
+    resize: none;
+  }
+  tfoot {
+    display: table-header-group;
+}

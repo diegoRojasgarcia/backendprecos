@@ -1,0 +1,17 @@
+
+#map-template{
+  height: 90%;
+  width: 98%;
+  position: absolute;
+    top: 65px;
+    left: 12px;
+    border: 3px solid rgb(3, 25, 87);
+  
+  
+  }
+  .myDivIcon {
+    text-align: center;
+    /* Horizontally center the text (icon) */
+    line-height: 20px;
+    /* Vertically center the text (icon) */
+  }
