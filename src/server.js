@@ -62,7 +62,7 @@ app.use(`/cbpSchedulingAPI`, cbpSchedulingRoutes);
 app.use(`/administrativeAPI`, administrativeAPI);
 
 
-let port = 3000; // definicion del puerto
+let port =  3000; // definicion del puerto
 
 if (process.env.PORT) port = process.env.PORT; // si el sistema esta en producción se le asigna el puerto dado por el servidor, si no se queda con el 3000
 

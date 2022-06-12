@@ -29,9 +29,7 @@ router.use(function (req, res, next) {
   }
 }); //patient
 
-router.get("/GetListPatinetCCRForExport", _helpers["default"].isAutenticated, _ccrAPI["default"].getListPatientCcrForReports);
-
-//
+router.get("/GetListPatientCCRForExport", _helpers["default"].isAutenticated, _ccrAPI["default"].getListPatientCcrForReports); //
 
 router.get("/GetListPatientCCR", _helpers["default"].isAutenticated, _ccrAPI["default"].getListPatientCcr);
 router.post("/GetPatientCCRById", _helpers["default"].isAutenticated, _ccrAPI["default"].getPatientCCRById);
@@ -42,21 +40,21 @@ router.put("/UpdateEnrollmentSurveyCCR", _helpers["default"].isAutenticated, _cc
 router.get("/GetListEnrollmentSurveyCCR", _helpers["default"].isAutenticated, _ccrAPI["default"].getListEnrollmentSurveyCCR);
 router.post("/GetEnrollmentSurveyByIdCCR", _helpers["default"].isAutenticated, _ccrAPI["default"].getEnrollmentSurveyCCRByPatient); //risk survey
 
+router.post("/GetRiskSurveyBasicById", _helpers["default"].isAutenticated, _ccrAPI["default"].getRiskSurveyBasicByPatient);
 router.post("/RegisterRiskSurveyBasic", _helpers["default"].isAutenticated, _ccrAPI["default"].RegisterRiskSurveyBasic);
 router.put("/UpdateRiskSurveyBasic", _helpers["default"].isAutenticated, _ccrAPI["default"].UpdateRiskSurveyBasic);
+router.post("/GetRiskSurveyPathologiesById", _helpers["default"].isAutenticated, _ccrAPI["default"].getRiskSurveyPathologiesByPatient);
 router.post("/RegisterRiskSurveyPathologies", _helpers["default"].isAutenticated, _ccrAPI["default"].RegisterRiskSurveyPathologies);
 router.put("/UpdateRiskSurveyPathologies", _helpers["default"].isAutenticated, _ccrAPI["default"].UpdateRiskSurveyPathologies);
+router.post("/GetRiskSurveyHabitsById", _helpers["default"].isAutenticated, _ccrAPI["default"].getRiskSurveyHabitsByPatient);
 router.post("/RegisterRiskSurveyHabits", _helpers["default"].isAutenticated, _ccrAPI["default"].RegisterRiskSurveyHabits);
 router.put("/UpdateRiskSurveyHabits", _helpers["default"].isAutenticated, _ccrAPI["default"].UpdateRiskSurveyHabits);
+router.post("/GetRiskSurveyFamilyById", _helpers["default"].isAutenticated, _ccrAPI["default"].getRiskSurveyFamilyByPatient);
 router.post("/RegisterRiskSurveyFamily", _helpers["default"].isAutenticated, _ccrAPI["default"].RegisterRiskSurveyFamily);
 router.put("/UpdateRiskSurveyFamily", _helpers["default"].isAutenticated, _ccrAPI["default"].UpdateRiskSurveyFamily);
+router.post("/GetRiskSurveyFamilyCancerById", _helpers["default"].isAutenticated, _ccrAPI["default"].getRiskSurveyFamilyCancerByPatient);
 router.post("/RegisterRiskSurveyFamilyCancer", _helpers["default"].isAutenticated, _ccrAPI["default"].RegisterRiskSurveyFamilyCancer);
 router.put("/UpdateRiskSurveyFamilyCancer", _helpers["default"].isAutenticated, _ccrAPI["default"].UpdateRiskSurveyFamilyCancer);
-router.post("/GetRiskSurveyBasicById", _helpers["default"].isAutenticated, _ccrAPI["default"].getRiskSurveyBasicByPatient);
-router.post("/GetRiskSurveyPathologiesById", _helpers["default"].isAutenticated, _ccrAPI["default"].getRiskSurveyPathologiesByPatient);
-router.post("/GetRiskSurveyHabitsById", _helpers["default"].isAutenticated, _ccrAPI["default"].getRiskSurveyHabitsByPatient);
-router.post("/GetRiskSurveyFamilyById", _helpers["default"].isAutenticated, _ccrAPI["default"].getRiskSurveyFamilyByPatient);
-router.post("/GetRiskSurveyFamilyCancerById", _helpers["default"].isAutenticated, _ccrAPI["default"].getRiskSurveyFamilyCancerByPatient);
 router["delete"]("/familyDelete", _helpers["default"].isAutenticated, _ccrAPI["default"].familyDelete); //Exams
 
 router.post("/RegisterColoncheck", _helpers["default"].isAutenticated, _ccrAPI["default"].RegisterColoncheck);

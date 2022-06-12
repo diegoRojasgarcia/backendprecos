@@ -34,6 +34,7 @@ router.post("/GetPatientById", _helpers["default"].isAutenticated, _patientAPI["
 router.get("/GetPatients", _helpers["default"].isAutenticated, _patientAPI["default"].getPatients);
 router.post("/GetPatientsByRut", _helpers["default"].isAutenticated, _patientAPI["default"].getPatientsByRut);
 router.post("/GetPatientsCancerByRut", _helpers["default"].isAutenticated, _patientAPI["default"].getPatientsCancerByRut);
+router["delete"]("/deleteAllForPatient", _helpers["default"].isAutenticated, _patientAPI["default"].deleteAllForPatient);
 router.all('*', function (req, res) {
   res.status(404).json({
     message: 'La ruta de la solicitud HTTP no es reconocida por el servidor.'

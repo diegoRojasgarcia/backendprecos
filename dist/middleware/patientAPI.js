@@ -168,5 +168,23 @@ functionQueries.getPatientsCancerByRut = function (req, res) {
   });
 };
 
+functionQueries.deleteAllForPatient = function (req, res) {
+  //query encargada de obtener al usuario
+  var Id_Patient = req.body.idPatient;
+
+  _postgresConnection["default"].tx(function (t) {
+    return t.none("delete from patient where id_patient = $1", [Id_Patient]);
+  }).then(function (data) {
+    res.status(200).json({
+      msg: "Paciente eliminado"
+    });
+  })["catch"](function (err) {
+    res.status(500).json({
+      err: err,
+      msg: "Ha ocurrido un error"
+    });
+  });
+};
+
 var _default = functionQueries;
 exports["default"] = _default;

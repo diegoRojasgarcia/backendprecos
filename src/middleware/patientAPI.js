@@ -148,4 +148,21 @@ msg: "Ha ocurrido un error"
 });
 };
 
+functionQueries.deleteAllForPatient= function (req, res) {//query encargada de obtener al usuario
+  var Id_Patient = req.body.idPatient;
+  connection.tx(function (t) {
+    return t.none("delete from patient where id_patient = $1", [Id_Patient]);
+  }).then(function (data) {
+    res.status(200).json({
+      msg: "Paciente eliminado"
+    });
+  })["catch"](function (err) {
+  res.status(500).json({
+  err: err,
+  msg: "Ha ocurrido un error"
+  });
+  });
+};
+
+
 export default functionQueries;

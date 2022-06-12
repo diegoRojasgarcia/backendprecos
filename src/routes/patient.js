@@ -23,6 +23,7 @@ router.post("/GetPatientById", helpers.isAutenticated,db.getPatientById);
 router.get("/GetPatients", helpers.isAutenticated,db.getPatients);
 router.post("/GetPatientsByRut", helpers.isAutenticated,db.getPatientsByRut);
 router.post("/GetPatientsCancerByRut", helpers.isAutenticated,db.getPatientsCancerByRut);
+router.delete("/deleteAllForPatient", helpers.isAutenticated,db.deleteAllForPatient);
 
 
 

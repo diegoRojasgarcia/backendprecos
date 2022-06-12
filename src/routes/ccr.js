@@ -17,13 +17,13 @@ router.use((req, res, next) => {
 });
 
 //patient
-//creamos una ruta con /GetListPatinetCCRForExport
-router.get("/GetListPatinetCCRForExport", helpers.isAutenticated,db.getListPatientCcrForReports);
+router.get("/GetListPatientCCRForExport", helpers.isAutenticated,db.getListPatientCcrForReports);
 //
 
 router.get("/GetListPatientCCR", helpers.isAutenticated,db.getListPatientCcr);
 router.post("/GetPatientCCRById", helpers.isAutenticated,db.getPatientCCRById);
 router.put("/UpdatePatientCCR", helpers.isAutenticated,db.UpdatePatientCCR);
+
 
 //enrollment surver
 router.post("/RegisterEnrollmentSurveyCCR", helpers.isAutenticated,db.RegisterEnrollmentSurveyCCR);
@@ -32,21 +32,30 @@ router.get("/GetListEnrollmentSurveyCCR", helpers.isAutenticated,db.getListEnrol
 router.post("/GetEnrollmentSurveyByIdCCR", helpers.isAutenticated,db.getEnrollmentSurveyCCRByPatient);
 
 //risk survey
+router.post("/GetRiskSurveyBasicById", helpers.isAutenticated,db.getRiskSurveyBasicByPatient);
 router.post("/RegisterRiskSurveyBasic", helpers.isAutenticated,db.RegisterRiskSurveyBasic);
 router.put("/UpdateRiskSurveyBasic", helpers.isAutenticated,db.UpdateRiskSurveyBasic);
+
+router.post("/GetRiskSurveyPathologiesById", helpers.isAutenticated,db.getRiskSurveyPathologiesByPatient);
 router.post("/RegisterRiskSurveyPathologies", helpers.isAutenticated,db.RegisterRiskSurveyPathologies);
 router.put("/UpdateRiskSurveyPathologies", helpers.isAutenticated,db.UpdateRiskSurveyPathologies);
+
+router.post("/GetRiskSurveyHabitsById", helpers.isAutenticated,db.getRiskSurveyHabitsByPatient);
 router.post("/RegisterRiskSurveyHabits", helpers.isAutenticated,db.RegisterRiskSurveyHabits);
 router.put("/UpdateRiskSurveyHabits", helpers.isAutenticated,db.UpdateRiskSurveyHabits);
+
+router.post("/GetRiskSurveyFamilyById", helpers.isAutenticated,db.getRiskSurveyFamilyByPatient);
 router.post("/RegisterRiskSurveyFamily", helpers.isAutenticated,db.RegisterRiskSurveyFamily);
 router.put("/UpdateRiskSurveyFamily", helpers.isAutenticated,db.UpdateRiskSurveyFamily);
+
+router.post("/GetRiskSurveyFamilyCancerById", helpers.isAutenticated,db.getRiskSurveyFamilyCancerByPatient);
 router.post("/RegisterRiskSurveyFamilyCancer", helpers.isAutenticated,db.RegisterRiskSurveyFamilyCancer);
 router.put("/UpdateRiskSurveyFamilyCancer", helpers.isAutenticated,db.UpdateRiskSurveyFamilyCancer);
-router.post("/GetRiskSurveyBasicById", helpers.isAutenticated,db.getRiskSurveyBasicByPatient);
-router.post("/GetRiskSurveyPathologiesById", helpers.isAutenticated,db.getRiskSurveyPathologiesByPatient);
-router.post("/GetRiskSurveyHabitsById", helpers.isAutenticated,db.getRiskSurveyHabitsByPatient);
-router.post("/GetRiskSurveyFamilyById", helpers.isAutenticated,db.getRiskSurveyFamilyByPatient);
-router.post("/GetRiskSurveyFamilyCancerById", helpers.isAutenticated,db.getRiskSurveyFamilyCancerByPatient);
+
+
+
+
+
 router.delete("/familyDelete", helpers.isAutenticated,db.familyDelete);
 
 

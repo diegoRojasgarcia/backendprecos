@@ -30,6 +30,7 @@ router.use(function (req, res, next) {
 }); //Patient
 
 router.get("/GetListPatientCBP", _helpers["default"].isAutenticated, _cbpAPI["default"].getListPatientCBP);
+router.get("/GetListPatientCBPReports", _helpers["default"].isAutenticated, _cbpAPI["default"].getListPatientCbpForReports);
 router.post("/GetPatientCBPById", _helpers["default"].isAutenticated, _cbpAPI["default"].getPatientCBPById);
 router.get("/GetListTAC0", _helpers["default"].isAutenticated, _cbpAPI["default"].getListTAC0);
 router.get("/GetListTAC1", _helpers["default"].isAutenticated, _cbpAPI["default"].getListTAC1);
@@ -54,7 +55,24 @@ router.post("/GetBiopsyByIdCBP", _helpers["default"].isAutenticated, _cbpAPI["de
 router["delete"]("/biopsyCBPDelete", _helpers["default"].isAutenticated, _cbpAPI["default"].biopsyCBPDelete); //Tracking
 
 router.get("/GetScheduleTrackingLungRADS", _helpers["default"].isAutenticated, _cbpAPI["default"].GetScheduleTrackingLungRADS);
-router.put("/UpdateContactLungRads", _helpers["default"].isAutenticated, _cbpAPI["default"].UpdateContactLungRads);
+router.put("/UpdateContactLungRads", _helpers["default"].isAutenticated, _cbpAPI["default"].UpdateContactLungRads); //risk survey
+
+router.post("/RegisterRiskSurveyBasic", _helpers["default"].isAutenticated, _cbpAPI["default"].RegisterRiskSurveyBasic);
+router.put("/UpdateRiskSurveyBasic", _helpers["default"].isAutenticated, _cbpAPI["default"].UpdateRiskSurveyBasic);
+router.post("/GetRiskSurveyBasicById", _helpers["default"].isAutenticated, _cbpAPI["default"].getRiskSurveyBasicByPatient);
+router.post("/GetRiskSurveyPathologiesById", _helpers["default"].isAutenticated, _cbpAPI["default"].getRiskSurveyPathologiesByPatient);
+router.post("/RegisterRiskSurveyPathologies", _helpers["default"].isAutenticated, _cbpAPI["default"].RegisterRiskSurveyPathologies);
+router.put("/UpdateRiskSurveyPathologies", _helpers["default"].isAutenticated, _cbpAPI["default"].UpdateRiskSurveyPathologies);
+router.post("/GetRiskSurveyHabitsById", _helpers["default"].isAutenticated, _cbpAPI["default"].getRiskSurveyHabitsByPatient);
+router.post("/RegisterRiskSurveyHabits", _helpers["default"].isAutenticated, _cbpAPI["default"].RegisterRiskSurveyHabits);
+router.put("/UpdateRiskSurveyHabits", _helpers["default"].isAutenticated, _cbpAPI["default"].UpdateRiskSurveyHabits);
+router.post("/GetRiskSurveyFamilyById", _helpers["default"].isAutenticated, _cbpAPI["default"].getRiskSurveyFamilyByPatient);
+router.post("/RegisterRiskSurveyFamily", _helpers["default"].isAutenticated, _cbpAPI["default"].RegisterRiskSurveyFamily);
+router.put("/UpdateRiskSurveyFamily", _helpers["default"].isAutenticated, _cbpAPI["default"].UpdateRiskSurveyFamily);
+router.post("/RegisterRiskSurveyFamilyCancer", _helpers["default"].isAutenticated, _cbpAPI["default"].RegisterRiskSurveyFamilyCancer);
+router.put("/UpdateRiskSurveyFamilyCancer", _helpers["default"].isAutenticated, _cbpAPI["default"].UpdateRiskSurveyFamilyCancer);
+router.post("/GetRiskSurveyFamilyCancerById", _helpers["default"].isAutenticated, _cbpAPI["default"].getRiskSurveyFamilyCancerByPatient);
+router["delete"]("/familyDelete", _helpers["default"].isAutenticated, _cbpAPI["default"].familyDelete);
 router.all('*', function (req, res) {
   res.status(404).json({
     message: 'La ruta de la solicitud HTTP no es reconocida por el servidor.'

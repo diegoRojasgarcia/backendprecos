@@ -19,7 +19,9 @@ router.use((req, res, next) => {
 
 //Patient
 router.get("/GetListPatientCBP", helpers.isAutenticated,db.getListPatientCBP);
+router.get("/GetListPatientCBPReports", helpers.isAutenticated, db.getListPatientCbpForReports);
 router.post("/GetPatientCBPById", helpers.isAutenticated,db.getPatientCBPById);
+
 router.get("/GetListTAC0", helpers.isAutenticated,db.getListTAC0);
 router.get("/GetListTAC1", helpers.isAutenticated,db.getListTAC1);
 router.get("/GetListTAC2", helpers.isAutenticated,db.getListTAC2);
@@ -50,9 +52,31 @@ router.get("/GetScheduleTrackingLungRADS",helpers.isAutenticated,db.GetScheduleT
 router.put("/UpdateContactLungRads", helpers.isAutenticated, db.UpdateContactLungRads);
 
 
+//risk survey
+router.post("/RegisterRiskSurveyBasic", helpers.isAutenticated,db.RegisterRiskSurveyBasic);
+router.put("/UpdateRiskSurveyBasic", helpers.isAutenticated,db.UpdateRiskSurveyBasic);
+router.post("/GetRiskSurveyBasicById", helpers.isAutenticated,db.getRiskSurveyBasicByPatient);
+
+router.post("/GetRiskSurveyPathologiesById", helpers.isAutenticated,db.getRiskSurveyPathologiesByPatient);
+router.post("/RegisterRiskSurveyPathologies", helpers.isAutenticated,db.RegisterRiskSurveyPathologies);
+router.put("/UpdateRiskSurveyPathologies", helpers.isAutenticated,db.UpdateRiskSurveyPathologies);
+
+router.post("/GetRiskSurveyHabitsById", helpers.isAutenticated,db.getRiskSurveyHabitsByPatient);
+router.post("/RegisterRiskSurveyHabits", helpers.isAutenticated,db.RegisterRiskSurveyHabits);
+router.put("/UpdateRiskSurveyHabits", helpers.isAutenticated,db.UpdateRiskSurveyHabits);
 
 
+router.post("/GetRiskSurveyFamilyById", helpers.isAutenticated,db.getRiskSurveyFamilyByPatient);
+router.post("/RegisterRiskSurveyFamily", helpers.isAutenticated,db.RegisterRiskSurveyFamily);
+router.put("/UpdateRiskSurveyFamily", helpers.isAutenticated,db.UpdateRiskSurveyFamily);
 
+
+router.post("/RegisterRiskSurveyFamilyCancer", helpers.isAutenticated,db.RegisterRiskSurveyFamilyCancer);
+router.put("/UpdateRiskSurveyFamilyCancer", helpers.isAutenticated,db.UpdateRiskSurveyFamilyCancer);
+router.post("/GetRiskSurveyFamilyCancerById", helpers.isAutenticated,db.getRiskSurveyFamilyCancerByPatient);
+
+
+router.delete("/familyDelete", helpers.isAutenticated,db.familyDelete);
 
 
 

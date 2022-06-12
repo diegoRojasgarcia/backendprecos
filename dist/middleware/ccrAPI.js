@@ -32,7 +32,7 @@ functionQueries.getPatientCCRById = function (req, res) {
 functionQueries.getListPatientCcr = function (req, res) {
   //query encargada de obtener al usuario
   _postgresConnection["default"].tx(function (t) {
-    return t.any("select pat.id_patient, pat.name, pat.last_name, pat.last_name2, pat.rut, col.test_result as coloncheck_result, colon.test_result as colonoscopy_result, colon.polyps, colon.neoplastic_lesion, colon.test_date as last_colonoscopy_date\n    from patient as pat inner join patientccr as patccr on pat.id_patient = patccr.id_patient\n    left join(\n    SELECT *\n    FROM coloncheck col\n    WHERE col.id_coloncheck = (SELECT col2.id_coloncheck\n                  FROM coloncheck col2\n                  WHERE col.id_patient = col2.id_patient and col2.test_date is not null\n                  ORDER BY col2.test_date desc\n                  LIMIT 1)) as col on pat.id_patient = col.id_patient\n    left join(\t\t\t  \n    SELECT *\n    FROM colonoscopy colon\n    WHERE colon.id_colonoscopy = (SELECT colon2.id_colonoscopy\n                  FROM colonoscopy colon2\n                  WHERE colon.id_patient = colon2.id_patient and colon2.test_date is not null\n                  ORDER BY colon2.test_date desc\n                  LIMIT 1)) as colon on pat.id_patient = colon.id_patient\n    WHERE patccr.state != 'Rechazado'\n                  ");
+    return t.any("select pat.id_patient, pat.name, pat.last_name, pat.last_name2, pat.rut, patccr.state, col.test_result as coloncheck_result, colon.test_result as colonoscopy_result, colon.polyps, colon.neoplastic_lesion, colon.test_date as last_colonoscopy_date, patccr.motivorechazo   from patient as pat inner join patientccr as patccr on pat.id_patient = patccr.id_patient  left join(  SELECT * FROM coloncheck col  WHERE col.id_coloncheck = (SELECT col2.id_coloncheck            FROM coloncheck col2            WHERE col.id_patient = col2.id_patient and col2.test_date is not null       ORDER BY col2.test_date desc             LIMIT 1)) as col on pat.id_patient = col.id_patient  left join(  SELECT *  FROM colonoscopy colon  WHERE colon.id_colonoscopy = (SELECT colon2.id_colonoscopy         FROM colonoscopy colon2        WHERE colon.id_patient = colon2.id_patient and colon2.test_date is not null              ORDER BY colon2.test_date desc              LIMIT 1)) as colon on pat.id_patient = colon.id_patient               ");
   }).then(function (data) {
     res.status(200).json({
       data: data
@@ -43,13 +43,12 @@ functionQueries.getListPatientCcr = function (req, res) {
       msg: "Ha ocurrido un error"
     });
   });
-}; //enrollmente survey
-
+};
 
 functionQueries.getListPatientCcrForReports = function (req, res) {
   //query encargada de obtener al usuario
   _postgresConnection["default"].tx(function (t) {
-    return t.any("select pat.name, pat.last_name, pat.last_name2, pat.rut, pat.sex, pat.nationality, pat.birthday, pat.cellphone, pat.region, pat.fonasa, pat.cesfam , patccr.state, patccr.cancer_detection_date, col.test_result as coloncheck_result, colon.test_result as colonoscopy_result, colon.polyps, colon.neoplastic_lesion, colon.test_date as last_colonoscopy_date from patient as pat inner join patientccr as patccr on pat.id_patient = patccr.id_patient left join( SELECT * FROM coloncheck col WHERE col.id_coloncheck = (SELECT col2.id_coloncheck FROM coloncheck col2 WHERE col.id_patient = col2.id_patient and col2.test_date is not null ORDER BY col2.test_date desc LIMIT 1)) as col on pat.id_patient = col.id_patient left join(			   SELECT * FROM colonoscopy colon WHERE colon.id_colonoscopy = (SELECT colon2.id_colonoscopy FROM colonoscopy colon2 WHERE colon.id_patient = colon2.id_patient and colon2.test_date is not null ORDER BY colon2.test_date desc LIMIT 1)) as colon on pat.id_patient = colon.id_patient");
+    return t.any("select * from  (select * from (select * from (select * from (select pat.id_patient,pat.name,pat.last_name,pat.last_name2,pat.rut,date_part('year',Age(pat.birthday)) as edad,pat.birthday::Date,pat.sex,pat.cellphone,pat.address,pat.fonasa as previcion,rb.weight as peso, rb.height as altura, rb.imc, rb.c_abdominal as cmabdominal, pat.cancer_detection_date::Date as cancerdetectiondate from (select pat.id_patient,pat.name,pat.last_name,pat.last_name2,pat.rut,pat.birthday,pat.sex,pat.cellphone,pat.address,pat.fonasa, patientccr.cancer_detection_date::Date from patient as pat inner join patientccr on patientccr.id_patient = pat.id_patient ) as pat left join risksurveybasicbackground as rb on rb.id_patient = pat.id_patient) as pat left join (select cloncheck.id_patient as id_pat, test_result as testresultcoloncheck, test_date::Date as lastcoloncheck, cloncheck.cant_colon_check as cantcoloncheck from (select id_patient, max(test_date) as last_colon_check,count(id_patient) as cant_colon_check from coloncheck group by id_patient) as cloncheck left join coloncheck on coloncheck.test_date = cloncheck.last_colon_check and coloncheck.id_patient = cloncheck.id_patient) as clchek on clchek.id_pat = pat.id_patient) as pat left join (select co.id_patien, colonoscopy.test_result as colonoscopy, colonoscopy.polyps , co.lastcolonoscopy::Date, co.cantcolonoscopy, co.neoplastic_lesion as neoplasticlesion from (select id_patient as id_patien, max(test_date) as lastcolonoscopy, count(id_patient) as cantcolonoscopy, neoplastic_lesion from colonoscopy group by id_patient, neoplastic_lesion) as co left join colonoscopy on colonoscopy.test_date = co.lastcolonoscopy and colonoscopy.id_patient = co.id_patien) as clonoscopy on clonoscopy.id_patien = pat.id_patient order by pat.id_patient ) as pat left join (select id_patient as id_p, max(biopsy_date) as lastbiopsy, count(id_patient) as cantBiopsy from biopsyccr group by id_patient) as biopsy on biopsy.id_p = pat.id_patient order by pat.id_patient) as infopat left join (select id_patient,smokes,number_cigarettes as ncigarettes, years_smoking as ysmoking from risksurveyhabits) as riskhabit on riskhabit.id_patient = infopat.id_patient");
   }).then(function (data) {
     res.status(200).json({
       data: data
@@ -60,16 +59,7 @@ functionQueries.getListPatientCcrForReports = function (req, res) {
       msg: "Ha ocurrido un error"
     });
   });
-}; //enrollmente survey
-
-
-
-
-
-
-
-
-
+};
 
 functionQueries.RegisterEnrollmentSurveyCCR = function (req, res, next) {
   //query encargada de ingresar los usuarios
@@ -130,26 +120,45 @@ functionQueries.RegisterEnrollmentSurveyCCR = function (req, res, next) {
       res.status(200).json({
         data: data,
         msg: "El paciente puede ingresar al programa de detección temprana del cáncer colorectal"
-      });
+      }); // --------------------------------------------------------------------------------------------------------------------------------------
     } else {
-      functionQueries.InsertStatePatientccr(Id_Patient, "Rechazado");
-
       if (BleedingInStools == 1 | AlterationOfBowelHabits == 1 | AbdominalPain == 1 | weightLoss == 1) {
+        functionQueries.InsertStatePatientccr(Id_Patient, "Rechazado", "El paciente NO puede ingresar al programa de detección temprana del cáncer colorectal ya que no cumple con los criterios de inclusión, el paciente debe tomar hora urgente con gastroenterología en su consultorio.");
         res.status(200).json({
           msg: "El paciente NO puede ingresar al programa de detección temprana del cáncer colorectal ya que no cumple con los criterios de inclusión, el paciente debe tomar hora urgente con gastroenterología en su consultorio."
         });
       } else {
+        functionQueries.InsertStatePatientccr(Id_Patient, "Rechazado", "El paciente NO puede ingresar al programa de detección temprana del cáncer colorectal ya que cuenta con un estudio completo realizado, por lo que no necesita otro.");
+
         if (colonoscopy == 1) {
           res.status(200).json({
             msg: "El paciente NO puede ingresar al programa de detección temprana del cáncer colorectal ya que usted cuenta con un estudio completo realizado, por lo que no necesita otro."
           });
         } else {
+          functionQueries.InsertStatePatientccr(Id_Patient, "Rechazado", "El paciente NO puede ingresar al programa de detección temprana del cáncer colorectal ya que no cumple con los criterios de inclusión");
           res.status(200).json({
             msg: "El paciente NO puede ingresar al programa de detección temprana del cáncer colorectal ya que no cumple con los criterios de inclusión"
           });
         }
       }
-    }
+    } // luego de insertar al paciente en la tabla colonrectal y siendo un paciente con estado activo, insertamos en las tablas para el ingreso de los datos obteniendolos mendiante las encuestas vistas en su perfil
+
+
+    _postgresConnection["default"].tx(function (t) {
+      return t.none("insert into risksurveybasicbackground (id_patient) values ($1)", [Id_Patient]);
+    });
+
+    _postgresConnection["default"].tx(function (t) {
+      return t.none("insert into risksurveyhabits (id_patient) values ($1) ", [Id_Patient]);
+    });
+
+    _postgresConnection["default"].tx(function (t) {
+      return t.none("insert into risksurveyfamilybackground (id_patient) values ($1) ", [Id_Patient]);
+    });
+
+    _postgresConnection["default"].tx(function (t) {
+      return t.none("insert into risksurveypathologies (id_patient) values ($1) ", [Id_Patient]);
+    });
   })["catch"](function (err) {
     res.status(500).json({
       err: err,
@@ -278,13 +287,14 @@ functionQueries.getEnrollmentSurveyCCRByPatient = function (req, res) {
   });
 };
 
-functionQueries.InsertStatePatientccr = function (IdPatient, State, next) {
+functionQueries.InsertStatePatientccr = function (IdPatient, State, motivorechazo, next) {
   //query encargada de ingresar los usuarios
   var State = State;
   var Id_Patient = IdPatient;
+  var motivorechazo = motivorechazo;
 
   _postgresConnection["default"].tx(function (t) {
-    return t.none("insert into patientccr (id_patient, state) VALUES ($1,$2)", [Id_Patient, State]);
+    return t.none("insert into patientccr (id_patient, state, motivorechazo) VALUES ($1,$2,$3)", [Id_Patient, State, motivorechazo]);
   });
 };
 
@@ -292,9 +302,10 @@ functionQueries.UpdateStatePatientccr = function (IdPatient, State, next) {
   //query encargada de ingresar los usuarios
   var State = State;
   var Id_Patient = IdPatient;
+  var motivorechazo = motivorechazo;
 
   _postgresConnection["default"].tx(function (t) {
-    return t.none("update patientccr SET state=$2 WHERE id_patient =$1", [Id_Patient, State]);
+    return t.none("update patientccr SET state=$2, motivorechazo=$3 WHERE id_patient =$1", [Id_Patient, State, motivorechazo]);
   });
 }; //risk survey   
 
@@ -933,13 +944,14 @@ functionQueries.UpdatePatientCCR = function (req, res, next) {
   var id_patient = req.body.idPatient;
   var state = req.body.state;
   var cancer_detection_date = req.body.cancerDetectionDate;
+  var motivorechazo = req.body.motivorechazo;
 
   if (cancer_detection_date == "") {
     cancer_detection_date = null;
   }
 
   _postgresConnection["default"].tx(function (t) {
-    return t.none("UPDATE patientccr SET state=$2, cancer_detection_date=$3 WHERE id_patient= $1;", [id_patient, state, cancer_detection_date]);
+    return t.none("UPDATE patientccr SET state=$2, cancer_detection_date=$3, motivorechazo=$4 WHERE id_patient= $1;", [id_patient, state, cancer_detection_date, motivorechazo]);
   }).then(function (data) {
     res.status(200).json({
       msg: "Se ha actualizado el paciente correctamente"
