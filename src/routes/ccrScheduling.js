@@ -1,5 +1,5 @@
 import Express from 'express';
-import db from '../middleware/ccrSchedulingAPI.js';
+import db from '../middleware/ccrSchedulingApi.js';
 import helpers from '../helpers/helpers.js';
 
 const router = Express.Router();
