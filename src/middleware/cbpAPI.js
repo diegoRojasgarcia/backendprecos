@@ -20,7 +20,6 @@ functionQueries.getPatientCBPById = function (req, res) {//query encargada de ob
   });
 };
 
-
 functionQueries.getListPatientCBP = function (req, res) {//query encargada de obtener al usuario
   connection.tx(function (t) {
     return t.any("select pat.id_patient, pat.name, pat.last_name,patcbp.state, pat.last_name2, date_part('year',Age(pat.birthday)) as age, patcbp.derivation_state_nfm, patcbp.motivorechazo, survey.risk_profession, datos2.tac_counter, pat.cellphone, pat.mail, ldct.lung_rads ,ldct.ldct_date  from patient as pat inner join patientcbp as patcbp on pat.id_patient = patcbp.id_patient   left join (SELECT *    FROM ldct ldct   WHERE ldct.id_ldct = (SELECT ldct2.id_ldct               FROM ldct ldct2                WHERE ldct.id_patient = ldct2.id_patient and ldct2.ldct_date is not null                ORDER BY ldct2.ldct_date desc               LIMIT 1)) as ldct on pat.id_patient = ldct.id_patient   left join (select tac.id_patient as id_patient, count(tac.id_ldct) as tac_counter from ldct as tac group by id_patient) as datos2 on patcbp.id_patient = datos2.id_patient inner join enrollmentsurveycbp as survey on patcbp.id_patient = survey.id_patient");
@@ -39,7 +38,7 @@ functionQueries.getListPatientCBP = function (req, res) {//query encargada de ob
 functionQueries.getListPatientCbpForReports = function (req, res) {
   //query encargada de obtener al usuario
   connection.tx(function (t) {
-    return t.any("select * from (select pa.id_patient, pa.name, pa.last_name as lastname,pa.last_name2 as lastname2 ,rut, date_part('year',Age(birthday)) as edad , pa.rut,pa.birthday,pa.sex,pa.cesfam,pa.address,pa.cellphone,pa.emergency_phone as ecellphone,pa.fonasa,pacbp.derivation_state_nfm as derivationstatenfm,pacbp.cancer_detection_date as cancerdetectiondate from patient as pa inner join patientcbp as pacbp on pacbp.id_patient = pa.id_patient) as infopat left join biopsycbp on biopsycbp.id_patient = infopat.id_patient");
+    return t.any("select infpt.idpatientcbp, infpt.estadocbp, infpt.rut,infpt.name, infpt.lastname, infpt.lastname2, infpt.sex, infpt.edad, infpt.birthday, infpt.cesfam, infpt.cellphone,infpt.emergencycellphone, infpt.fonasa, infpt.derivacion,riskbasic.weight, riskbasic.height, riskbasic.imc, riskbasic.c_abdominal as cabdominal, riskbasic.pa_diastolic as padiastolic from (select pat.id_patient as idpatientcbp, patientcbp.state as estadocbp, pat.rut, pat.name, pat.last_name as lastname, pat.last_name2 as lastname2, pat.sex, date_part('year',Age(birthday)) as edad, pat.birthday,pat.cesfam, pat.cellphone, pat.emergency_phone as emergencycellphone, pat.fonasa, patientcbp.derivation_state_nfm as derivacion from patient as pat inner join patientcbp on patientcbp.id_patient = pat.id_patient) as infpt left join risksurveybasicbackground as riskbasic on riskbasic.id_patient = infpt.idpatientcbp");
   }).then(function (data) {
     res.status(200).json({
       data: data

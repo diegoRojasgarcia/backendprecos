@@ -7,7 +7,7 @@ exports["default"] = void 0;
 
 var _express = _interopRequireDefault(require("express"));
 
-var _ccrSchedulingAPI = _interopRequireDefault(require("../middleware/ccrSchedulingAPI.js"));
+var _ccrSchedulingApi = _interopRequireDefault(require("../middleware/ccrSchedulingApi.js"));
 
 var _helpers = _interopRequireDefault(require("../helpers/helpers.js"));
 
@@ -28,10 +28,10 @@ router.use(function (req, res, next) {
     next();
   }
 });
-router.post("/RegisterSchedule", _helpers["default"].isAutenticated, _ccrSchedulingAPI["default"].RegisterSchedule);
-router.put("/UpdateSchedule", _helpers["default"].isAutenticated, _ccrSchedulingAPI["default"].UpdateSchedule);
-router.get("/GetScheduleCCR", _helpers["default"].isAutenticated, _ccrSchedulingAPI["default"].GetScheduleCCR);
-router.post("/GetScheduleRangeCCR", _helpers["default"].isAutenticated, _ccrSchedulingAPI["default"].GetScheduleRangeCCR);
+router.post("/RegisterSchedule", _helpers["default"].isAutenticated, _ccrSchedulingApi["default"].RegisterSchedule);
+router.put("/UpdateSchedule", _helpers["default"].isAutenticated, _ccrSchedulingApi["default"].UpdateSchedule);
+router.get("/GetScheduleCCR", _helpers["default"].isAutenticated, _ccrSchedulingApi["default"].GetScheduleCCR);
+router.post("/GetScheduleRangeCCR", _helpers["default"].isAutenticated, _ccrSchedulingApi["default"].GetScheduleRangeCCR);
 router.all('*', function (req, res) {
   res.status(404).json({
     message: 'La ruta de la solicitud HTTP no es reconocida por el servidor.'

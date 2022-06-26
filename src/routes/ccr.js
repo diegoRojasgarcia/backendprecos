@@ -24,7 +24,6 @@ router.get("/GetListPatientCCR", helpers.isAutenticated,db.getListPatientCcr);
 router.post("/GetPatientCCRById", helpers.isAutenticated,db.getPatientCCRById);
 router.put("/UpdatePatientCCR", helpers.isAutenticated,db.UpdatePatientCCR);
 
-
 //enrollment surver
 router.post("/RegisterEnrollmentSurveyCCR", helpers.isAutenticated,db.RegisterEnrollmentSurveyCCR);
 router.put("/UpdateEnrollmentSurveyCCR", helpers.isAutenticated,db.UpdateEnrollmentSurveyCCR);
