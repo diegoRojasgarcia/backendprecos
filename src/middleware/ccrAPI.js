@@ -54,8 +54,6 @@ functionQueries.getListPatientCcrForReports = function (req, res) {
   });
 }; 
 
-
-
 functionQueries.RegisterEnrollmentSurveyCCR = function (req, res, next) {
   //query encargada de ingresar los usuarios
   var Id_Patient = req.body.idPatient;
