@@ -52,9 +52,6 @@ router.post("/RegisterRiskSurveyFamilyCancer", helpers.isAutenticated,db.Registe
 router.put("/UpdateRiskSurveyFamilyCancer", helpers.isAutenticated,db.UpdateRiskSurveyFamilyCancer);
 
 
-
-
-
 router.delete("/familyDelete", helpers.isAutenticated,db.familyDelete);
 
 
