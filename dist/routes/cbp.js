@@ -31,6 +31,7 @@ router.use(function (req, res, next) {
 
 router.get("/GetListPatientCBP", _helpers["default"].isAutenticated, _cbpAPI["default"].getListPatientCBP);
 router.get("/GetListPatientCBPReports", _helpers["default"].isAutenticated, _cbpAPI["default"].getListPatientCbpForReports);
+router.get("/GetListPatientCBPStatistics", _helpers["default"].isAutenticated, _cbpAPI["default"].getListPatientCbpForstatistics);
 router.post("/GetPatientCBPById", _helpers["default"].isAutenticated, _cbpAPI["default"].getPatientCBPById);
 router.get("/GetListTAC0", _helpers["default"].isAutenticated, _cbpAPI["default"].getListTAC0);
 router.get("/GetListTAC1", _helpers["default"].isAutenticated, _cbpAPI["default"].getListTAC1);

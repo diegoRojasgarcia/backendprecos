@@ -51,6 +51,22 @@ functionQueries.getListPatientCbpForReports = function (req, res) {
   });
 }; //enrollmente survey
 
+functionQueries.getListPatientCbpForstatistics = function (req, res) {
+  //query encargada de obtener al usuario
+  connection.tx(function (t) {
+    return t.any("select sex,fonasa,patientcbp.state,patientcbp.derivation_state_nfm,rskhabits.smokes,rskhabits.drink_alcohol,rskpatho.diabetes,rskpatho.epilepsy,rskpatho.gastric_ulcer as gastricul,rskpatho.hypo_hyper_thyroidism as hypo,ldct.lung_rads as lrads, ldct.nodule, ldct.size,biopsy.lastbiopsy from patient inner join patientcbp on patientcbp.id_patient = patient.id_patient left join risksurveyhabits as rskhabits on rskhabits.id_patient = patient.id_patient left join risksurveypathologies as rskpatho on rskpatho.id_patient = patientcbp.id_patient left join risksurveybasicbackground as rskbasic on rskbasic.id_patient = patientcbp.id_patient left join (select ldct.id_patient,lung_rads,nodule,ldct.size from ldct inner join (select id_patient, max(ldct_date) as lastdate from ldct group by id_patient) as ldctcbp on ldctcbp.id_patient = ldct.id_patient and ldctcbp.lastdate = ldct.ldct_date) as ldct on ldct.id_patient  = patientcbp.id_patient left join (select id_patient as id_p, max(biopsy_date) as lastbiopsy, count(id_patient) as cantBiopsy from biopsycbp group by id_patient) as biopsy on biopsy.id_p = patientcbp.id_patient");
+  }).then(function (data) {
+    res.status(200).json({
+      data: data
+    });
+  })["catch"](function (err) {
+    res.status(500).json({
+      err: err,
+      msg: "Ha ocurrido un error"
+    });
+  });
+}; //enrollmente survey
+
 
 functionQueries.getListTAC0 = function (req, res) {//query encargada de obtener al usuario
   connection.tx(function (t) {
