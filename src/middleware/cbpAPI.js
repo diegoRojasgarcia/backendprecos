@@ -668,6 +668,7 @@ functionQueries.UpdateRiskSurveyBasic = function (req, res, next) {//query encar
     });
   });
 };
+
 functionQueries.RegisterRiskSurveyPathologies = function (req, res, next) {//query encargada de ingresar los usuarios
 
   var idPatient = req.body.idPatient;
@@ -681,7 +682,6 @@ functionQueries.RegisterRiskSurveyPathologies = function (req, res, next) {//que
   var cancer = req.body.cancer;
   var typeCancer = req.body.typeCancer;
   var cancerAge = req.body.cancerAge;
-  var otro = req.body.otro;
 
   connection.tx(function (t) {
     return t.any("INSERT INTO risksurveypathologies(id_patient, arterial_hypertension, diabetes, epilepsy, gastric_ulcer, hypo_hyper_thyroidism, operated, operation_reason, cancer, type_cancer, cancer_age, otro) VALUES ( $1 , $2 , $3 , $4 , $5,$6, $7 , $8 , $9 , $10,$11, $12) RETURNING id_risk_survey_pathologies ", [idPatient, arterialHypertension, diabetes, epilepsy, gastricUlcer, hypoHyperThyroidism, operated, operationReason, cancer, typeCancer, cancerAge, otro]);

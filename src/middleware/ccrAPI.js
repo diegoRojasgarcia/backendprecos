@@ -356,7 +356,7 @@ functionQueries.RegisterRiskSurveyPathologies = function (req, res, next) {//que
   var arterialHypertension = req.body.arterialHypertension;
   var diabetes = req.body.diabetes;
   var epilepsy = req.body.epilepsy;
-  var gastriculcer = req.body.gastriculcer;
+  var gastricUlcer = req.body.gastricUlcer;
   var hypoHyperThyroidism = req.body.hypoHyperThyroidism;
   var operated = req.body.operated;
   var operationReason = req.body.operationReason;
@@ -365,7 +365,7 @@ functionQueries.RegisterRiskSurveyPathologies = function (req, res, next) {//que
   var cancerAge = req.body.cancerAge;
 
   connection.tx(function (t) {
-    return t.any("INSERT INTO risksurveypathologies(id_patient, arterial_hypertension, diabetes, epilepsy, gastric_ulcer, hypo_hyper_thyroidism, operated, operation_reason, cancer, type_cancer, cancer_age) VALUES ( $1 , $2 , $3 , $4 , $5,$6, $7 , $8 , $9 , $10,$11) RETURNING id_risk_survey_pathologies ", [idPatient, arterialHypertension, diabetes, epilepsy, gastriculcer, hypoHyperThyroidism, operated, operationReason, cancer, typeCancer, cancerAge]);
+    return t.any("INSERT INTO risksurveypathologies(id_patient, arterial_hypertension, diabetes, epilepsy, gastric_ulcer, hypo_hyper_thyroidism, operated, operation_reason, cancer, type_cancer, cancer_age) VALUES ( $1 , $2 , $3 , $4 , $5,$6, $7 , $8 , $9 , $10,$11) RETURNING id_risk_survey_pathologies ", [idPatient, arterialHypertension, diabetes, epilepsy, gastricUlcer, hypoHyperThyroidism, operated, operationReason, cancer, typeCancer, cancerAge]);
   }).then(function (data) {
     res.status(200).json({
       data: data,
@@ -385,7 +385,7 @@ functionQueries.UpdateRiskSurveyPathologies = function (req, res, next) {//query
   var arterialHypertension = req.body.arterialHypertension;
   var diabetes = req.body.diabetes;
   var epilepsy = req.body.epilepsy;
-  var gastriculcer = req.body.gastriculcer;
+  var gastricUlcer = req.body.gastricUlcer;
   var hypoHyperThyroidism = req.body.hypoHyperThyroidism;
   var operated = req.body.operated;
   var operationReason = req.body.operationReason;
@@ -394,7 +394,7 @@ functionQueries.UpdateRiskSurveyPathologies = function (req, res, next) {//query
   var cancerAge = req.body.cancerAge;
 
   connection.tx(function (t) {
-    return t.none("UPDATE risksurveypathologies SET arterial_hypertension=$1, diabetes=$2, epilepsy=$3, gastric_ulcer=$4, hypo_hyper_thyroidism=$5, operated=$6, operation_reason=$7, cancer=$8, cancer_age=$9, type_cancer=$10 WHERE id_patient = $11 ", [arterialHypertension, diabetes, epilepsy, gastriculcer, hypoHyperThyroidism, operated, operationReason, cancer, cancerAge, typeCancer, idPatient]);
+    return t.none("UPDATE risksurveypathologies SET arterial_hypertension=$1, diabetes=$2, epilepsy=$3, gastric_ulcer=$4, hypo_hyper_thyroidism=$5, operated=$6, operation_reason=$7, cancer=$8, cancer_age=$9, type_cancer=$10 WHERE id_patient = $11 ", [arterialHypertension, diabetes, epilepsy, gastricUlcer, hypoHyperThyroidism, operated, operationReason, cancer, cancerAge, typeCancer, idPatient]);
   }).then(function (data) {
     res.status(200).json({
       msg: "Se ha actualizado la encuesta de riesgo"
