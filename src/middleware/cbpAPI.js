@@ -681,10 +681,10 @@ functionQueries.RegisterRiskSurveyPathologies = function (req, res, next) {//que
   var cancer = req.body.cancer;
   var typeCancer = req.body.typeCancer;
   var cancerAge = req.body.cancerAge;
-
+  var otro = req.body.otro;
 
   connection.tx(function (t) {
-    return t.any("INSERT INTO risksurveypathologies(id_patient, arterial_hypertension, diabetes, epilepsy, gastric_ulcer, hypo_hyper_thyroidism, operated, operation_reason, cancer, type_cancer, cancer_age) VALUES ( $1 , $2 , $3 , $4 , $5,$6, $7 , $8 , $9 , $10,$11) RETURNING id_risk_survey_pathologies ", [idPatient, arterialHypertension, diabetes, epilepsy, gastricUlcer, hypoHyperThyroidism, operated, operationReason, cancer, typeCancer, cancerAge]);
+    return t.any("INSERT INTO risksurveypathologies(id_patient, arterial_hypertension, diabetes, epilepsy, gastric_ulcer, hypo_hyper_thyroidism, operated, operation_reason, cancer, type_cancer, cancer_age, otro) VALUES ( $1 , $2 , $3 , $4 , $5,$6, $7 , $8 , $9 , $10,$11, $12) RETURNING id_risk_survey_pathologies ", [idPatient, arterialHypertension, diabetes, epilepsy, gastricUlcer, hypoHyperThyroidism, operated, operationReason, cancer, typeCancer, cancerAge, otro]);
   }).then(function (data) {
     res.status(200).json({
       data: data,
@@ -697,6 +697,7 @@ functionQueries.RegisterRiskSurveyPathologies = function (req, res, next) {//que
     });
   });
 };
+
 functionQueries.UpdateRiskSurveyPathologies = function (req, res, next) {//query encargada de ingresar los usuarios
 
   var idPatient = req.body.idPatient;
@@ -710,10 +711,10 @@ functionQueries.UpdateRiskSurveyPathologies = function (req, res, next) {//query
   var cancer = req.body.cancer;
   var typeCancer = req.body.typeCancer;
   var cancerAge = req.body.cancerAge;
-
+  var otro = req.body.otro;
 
   connection.tx(function (t) {
-    return t.none("UPDATE risksurveypathologies SET arterial_hypertension=$1, diabetes=$2, epilepsy=$3, gastric_ulcer=$4, hypo_hyper_thyroidism=$5, operated=$6, operation_reason=$7, cancer=$8, cancer_age=$9, type_cancer=$10 WHERE id_patient = $11 ", [arterialHypertension, diabetes, epilepsy, gastricUlcer, hypoHyperThyroidism, operated, operationReason, cancer, cancerAge, typeCancer, idPatient]);
+    return t.none("UPDATE risksurveypathologies SET arterial_hypertension=$1, diabetes=$2, epilepsy=$3, gastric_ulcer=$4, hypo_hyper_thyroidism=$5, operated=$6, operation_reason=$7, cancer=$8, cancer_age=$9, type_cancer=$10, otro =$12 WHERE id_patient = $11 ", [arterialHypertension, diabetes, epilepsy, gastricUlcer, hypoHyperThyroidism, operated, operationReason, cancer, cancerAge, typeCancer, otro, idPatient]);
   }).then(function (data) {
     res.status(200).json({
       msg: "Se ha actualizado la encuesta de riesgo"
@@ -725,6 +726,8 @@ functionQueries.UpdateRiskSurveyPathologies = function (req, res, next) {//query
     });
   });
 };
+
+
 functionQueries.RegisterRiskSurveyHabits = function (req, res, next) {//query encargada de ingresar los usuarios
 
   var idPatient = req.body.idPatient;
