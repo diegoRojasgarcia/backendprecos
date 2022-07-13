@@ -712,9 +712,10 @@ functionQueries.UpdateRiskSurveyPathologies = function (req, res, next) {//query
   var typeCancer = req.body.typeCancer;
   var cancerAge = req.body.cancerAge;
   var otro = req.body.otro;
+  var otroreason = req.body.otroreason;
 
   connection.tx(function (t) {
-    return t.none("UPDATE risksurveypathologies SET arterial_hypertension=$1, diabetes=$2, epilepsy=$3, gastric_ulcer=$4, hypo_hyper_thyroidism=$5, operated=$6, operation_reason=$7, cancer=$8, cancer_age=$9, type_cancer=$10, otro =$12 WHERE id_patient = $11 ", [arterialHypertension, diabetes, epilepsy, gastricUlcer, hypoHyperThyroidism, operated, operationReason, cancer, cancerAge, typeCancer, otro, idPatient]);
+    return t.none("UPDATE risksurveypathologies SET arterial_hypertension=$1, diabetes=$2, epilepsy=$3, gastric_ulcer=$4, hypo_hyper_thyroidism=$5, operated=$6, operation_reason=$7, cancer=$8, cancer_age=$9, type_cancer=$10, otro =$12,otroreason=$13 WHERE id_patient = $11 ", [arterialHypertension, diabetes, epilepsy, gastricUlcer, hypoHyperThyroidism, operated, operationReason, cancer, cancerAge, typeCancer, idPatient, otro, otroreason]);
   }).then(function (data) {
     res.status(200).json({
       msg: "Se ha actualizado la encuesta de riesgo"
