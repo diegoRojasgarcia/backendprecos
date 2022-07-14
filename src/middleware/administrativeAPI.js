@@ -157,7 +157,7 @@ res.status(500).json({
 
 functionQueries.getPActivity = function (req, res) {//query encargada de obtener al usuario
   connection.tx(function (t) {
-  return t.any("SELECT activity from pcactivity");
+  return t.any("SELECT activity from pcactivity order by activity");
   }).then(function (data) {
   res.status(200).json({
     data: data

@@ -450,9 +450,10 @@ functionQueries.UpdateRiskSurveyHabits = function (req, res, next) {//query enca
   var physicalActivity = req.body.physicalActivity;
   var threeFruits = req.body.threeFruits;
   var friedFoods = req.body.friedFoods;
+  var typeactivity = req.body.typeactivity;
 
   connection.tx(function (t) {
-    return t.none("UPDATE risksurveyhabits SET smokes=$1, number_cigarettes=$2, years_smoking=$3, eat_cereal_fiber=$4, drink_alcohol=$5, quantity_alcohol=$6, physical_activity=$7, three_fruits=$8, fried_foods=$9 WHERE id_patient = $10 ", [smokes, numberCigarettes, yearsSmoking, eatCerealFiber, drinkAlcohol, quantityAlcohol, physicalActivity, threeFruits, friedFoods, idPatient]);
+    return t.none("UPDATE risksurveyhabits SET smokes=$1, number_cigarettes=$2, years_smoking=$3, eat_cereal_fiber=$4, drink_alcohol=$5, quantity_alcohol=$6, physical_activity=$7, three_fruits=$8, fried_foods=$9, typeactivity=$11 WHERE id_patient = $10 ", [smokes, numberCigarettes, yearsSmoking, eatCerealFiber, drinkAlcohol, quantityAlcohol, physicalActivity, threeFruits, friedFoods, idPatient, typeactivity]);
   }).then(function (data) {
     res.status(200).json({
       msg: "Se ha actualizado la encuesta de riesgo"
