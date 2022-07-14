@@ -137,8 +137,9 @@ xhr.addEventListener('load', () => {
 })
 xhr.send();
 };
-functionQueries.getCesfam = function (req, res) {//query encargada de obtener al usuario
 
+
+functionQueries.getCesfam = function (req, res) {//query encargada de obtener al usuario
 connection.tx(function (t) {
 return t.any("SELECT cesfam from cesfam");
 }).then(function (data) {
@@ -152,6 +153,22 @@ res.status(500).json({
 });
 });
 };
+
+
+functionQueries.getPActivity = function (req, res) {//query encargada de obtener al usuario
+  connection.tx(function (t) {
+  return t.any("SELECT activity from pcactivity");
+  }).then(function (data) {
+  res.status(200).json({
+    data: data
+  });
+  })["catch"](function (err) {
+  res.status(500).json({
+    err: err,
+    msg: "Ha ocurrido un error"
+  });
+  });
+  };
 
 //Administrative survey
 functionQueries.getSurveyCBP = function (req, res) {//query encargada de obtener al usuario

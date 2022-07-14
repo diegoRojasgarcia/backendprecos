@@ -28,6 +28,7 @@ router.get("/GetNationality", helpers.isAutenticated, db.getNationality);
 router.get("/GetFonasa", helpers.isAutenticated, db.getFonasa);
 router.get("/GetMaritalStatus", helpers.isAutenticated, db.getMaritalStatus);
 router.get("/GetCesfam", helpers.isAutenticated, db.getCesfam);
+router.get("/GetPActivity", helpers.isAutenticated, db.getPActivity);
 
 //Administrative survey
 router.get("/GetSurveyCCR", helpers.isAutenticated,db.getSurveyCCR);
