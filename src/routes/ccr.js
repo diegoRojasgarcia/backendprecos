@@ -73,6 +73,8 @@ router.put("/UpdateScheduleContactTracking", helpers.isAutenticated, db.UpdateSc
 router.get("/GetScheduleOverdue",helpers.isAutenticated,db.GetScheduleOverdue);
 router.get("/GetScheduleTracking",helpers.isAutenticated,db.GetScheduleTracking);
 
+router.get("/GetAlcohol", helpers.isAutenticated, db.getAlcohol);
+
 
 router.all('*', (req, res) => {
     res.status(404).json({ message: 'La ruta de la solicitud HTTP no es reconocida por el servidor.' });
