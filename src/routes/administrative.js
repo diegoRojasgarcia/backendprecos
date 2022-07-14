@@ -40,7 +40,6 @@ router.get("/GetBiopsyType", helpers.isAutenticated, db.getBiopsyType);
 
 
 
-
 router.all('*', (req, res) => {
     res.status(404).json({ message: 'La ruta de la solicitud HTTP no es reconocida por el servidor.' });
 });
