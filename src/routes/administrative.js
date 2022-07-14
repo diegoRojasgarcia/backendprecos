@@ -31,8 +31,6 @@ router.get("/GetCesfam", helpers.isAutenticated, db.getCesfam);
 router.get("/GetPActivity", helpers.isAutenticated, db.getPActivity);
 router.get("/GetAlcohol", helpers.isAutenticated, db.getAcohol);
 
-
-
 //Administrative survey
 router.get("/GetSurveyCCR", helpers.isAutenticated,db.getSurveyCCR);
 router.get("/GetSurveyCBP", helpers.isAutenticated,db.getSurveyCBP);

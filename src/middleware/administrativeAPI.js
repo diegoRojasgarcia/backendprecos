@@ -171,7 +171,7 @@ functionQueries.getPActivity = function (req, res) {//query encargada de obtener
 };
 
 
-functionQueries.getAcohol = function (req, res) {//query encargada de obtener al usuario
+functionQueries.getAlcohol = function (req, res) {//query encargada de obtener al usuario
   connection.tx(function (t) {
     return t.any("Select alcohol from alcoholtype order by alcohol  ");
   }).then(function (data) {
