@@ -29,7 +29,7 @@ router.get("/GetFonasa", helpers.isAutenticated, db.getFonasa);
 router.get("/GetMaritalStatus", helpers.isAutenticated, db.getMaritalStatus);
 router.get("/GetCesfam", helpers.isAutenticated, db.getCesfam);
 router.get("/GetPActivity", helpers.isAutenticated, db.getPActivity);
-router.get("/GetAlcohol", helpers.isAutenticated, db.getAcohol);
+router.get("/GetAlcohol", helpers.isAutenticated, db.getAlcohol);
 
 //Administrative survey
 router.get("/GetSurveyCCR", helpers.isAutenticated,db.getSurveyCCR);
