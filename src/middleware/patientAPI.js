@@ -70,12 +70,13 @@ var volunteerAgreement= req.body.volunteerAgreement;
 var deceasedByCancer = req.body.deceasedByCancer;
 var Id_Patient = req.body.idPatient;
 var deceaseDate = req.body.deceaseDate;
+var isapre = req.body.isapre;
 
 if(deceaseDate==""){
   deceaseDate=null;
 }
 connection.tx(function (t) {
-return t.none("UPDATE patient SET rut=$2, name=$3, last_name=$4, last_name2=$5, sex=$6, nationality=$7, birthday=$8, region=$9, commune=$10,medical_facility=$11, cesfam=$12, address=$13, village=$14, residence_time=$15, cellphone=$16, mail=$17, marital_state=$18, emergency_phone=$19, deceased=$20, fonasa=$21, volunteer_agreement=$22, deceased_by_cancer=$23, previous_region=$24, decease_date=$25 WHERE id_patient=$1", [Id_Patient ,Rut, Name, LastName, LastName2, Sex,Nationality,Birthday,Region,Commune,medicalFacility,Cesfam,Address,Village,residenceTime,Cellphone,Mail,MaritalState,emergencyPhone,Deceased,Fonasa,volunteerAgreement, deceasedByCancer, previousRegion, deceaseDate]);
+return t.none("UPDATE patient SET rut=$2, name=$3, last_name=$4, last_name2=$5, sex=$6, nationality=$7, birthday=$8, region=$9, commune=$10,medical_facility=$11, cesfam=$12, address=$13, village=$14, residence_time=$15, cellphone=$16, mail=$17, marital_state=$18, emergency_phone=$19, deceased=$20, fonasa=$21, volunteer_agreement=$22, deceased_by_cancer=$23, previous_region=$24, decease_date=$25,isapre=$26 WHERE id_patient=$1", [Id_Patient ,Rut, Name, LastName, LastName2, Sex,Nationality,Birthday,Region,Commune,medicalFacility,Cesfam,Address,Village,residenceTime,Cellphone,Mail,MaritalState,emergencyPhone,Deceased,Fonasa,volunteerAgreement, deceasedByCancer, previousRegion, deceaseDate,isapre]);
 }).then(function (data) {
   res.status(200).json({
     msg: "Se ha actualizado un paciente"
