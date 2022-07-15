@@ -20,6 +20,7 @@ router.use((req, res, next) => {
 //Patient
 router.get("/GetListPatientCBP", helpers.isAutenticated,db.getListPatientCBP);
 router.get("/GetListPatientCBPReports", helpers.isAutenticated, db.getListPatientCbpForReports);
+router.get("/othersReports", helpers.isAutenticated,db.otherReport);
 router.get("/GetListPatientCBPStatistics", helpers.isAutenticated, db.getListPatientCbpForstatistics);
 router.post("/GetPatientCBPById", helpers.isAutenticated,db.getPatientCBPById);
 

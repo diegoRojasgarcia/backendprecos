@@ -38,7 +38,7 @@ functionQueries.getListPatientCBP = function (req, res) {//query encargada de ob
 functionQueries.getListPatientCbpForReports = function (req, res) {
   //query encargada de obtener al usuario
   connection.tx(function (t) {
-    return t.any("select inpat.idpatientcbp, inpat.estadocbp, inpat.rut, inpat.name, inpat.lastname, inpat.lastname2,inpat.mail , inpat.sex, inpat.edad, inpat.birthday, inpat.cellphone, inpat.emergencycellphone, inpat.fonasa, inpat.cesfam, inpat.derivacion,inpat.weight, inpat.height, inpat.imc, inpat.cabdominal, inpat.padiastolic, inpat.pasystolic, riskhabits.smokes, riskhabits.number_cigarettes as numbercigarettes, riskhabits.years_smoking as ysmoking from (select infpt.idpatientcbp, infpt.estadocbp, infpt.rut,infpt.name, infpt.lastname, infpt.lastname2,infpt.mail, infpt.sex, infpt.edad, infpt.birthday, infpt.cesfam, infpt.cellphone,infpt.emergencycellphone, infpt.fonasa, infpt.derivacion,riskbasic.weight, riskbasic.height, riskbasic.imc, riskbasic.c_abdominal as cabdominal, riskbasic.pa_diastolic as padiastolic, riskbasic.pa_systolic as pasystolic   from (select pat.id_patient as idpatientcbp, patientcbp.state as estadocbp, pat.rut, pat.name, pat.last_name as lastname, pat.last_name2 as lastname2,pat.mail, pat.sex, date_part('year',Age(birthday)) as edad, pat.birthday,pat.cesfam, pat.cellphone, pat.emergency_phone as emergencycellphone, pat.fonasa, patientcbp.derivation_state_nfm as derivacion  from patient as pat inner join patientcbp on patientcbp.id_patient = pat.id_patient) as infpt left join risksurveybasicbackground as riskbasic on riskbasic.id_patient = infpt.idpatientcbp) as inpat inner join risksurveyhabits as riskhabits on riskhabits.id_patient = inpat.idpatientcbp");
+    return t.any("select patient.id_patient as idpatient,patientcbp.state,rut,patient.name, last_name as lastname, last_name2 as lastname2, sex,date_part('year',Age(birthday)) as edad, birthday,cellphone,emergency_phone as ephone,mail, fonasa,cesfam,address,village,patientcbp.derivation_state_nfm as derivacion,rskbasic.weight,rskbasic.height,rskbasic.imc,rskbasic.c_abdominal as cabdomen,rskbasic.pa_systolic as pasystolic,rskbasic.pa_diastolic as padiastolic,rskhabits.smokes,rskhabits.drink_alcohol as drinkalcohol,rskpatho.diabetes,rskpatho.epilepsy,rskpatho.gastric_ulcer as gastricul,rskpatho.hypo_hyper_thyroidism as hypo,ldct.lung_rads as lrads, ldct.nodule, ldct.size,biopsy.lastbiopsy from patient inner join patientcbp on patientcbp.id_patient = patient.id_patient left join risksurveyhabits as rskhabits on rskhabits.id_patient = patient.id_patient left join risksurveypathologies as rskpatho on rskpatho.id_patient = patientcbp.id_patient left join risksurveybasicbackground as rskbasic on rskbasic.id_patient = patientcbp.id_patient left join (select ldct.id_patient,lung_rads,nodule,ldct.size from ldct inner join (select id_patient, max(ldct_date) as lastdate from ldct group by id_patient) as ldctcbp on ldctcbp.id_patient = ldct.id_patient and ldctcbp.lastdate = ldct.ldct_date) as ldct on ldct.id_patient  = patientcbp.id_patient left join (select id_patient as id_p, max(biopsy_date) as lastbiopsy, count(id_patient) as cantBiopsy from biopsycbp group by id_patient) as biopsy on biopsy.id_p = patientcbp.id_patient");
   }).then(function (data) {
     res.status(200).json({
       data: data
@@ -50,6 +50,32 @@ functionQueries.getListPatientCbpForReports = function (req, res) {
     });
   });
 }; //enrollmente survey
+
+functionQueries.otherReport = (req, res) => {
+  connection.tx(t => {
+    return t.oneOrNone(`
+      select patientBio.cantPatientBio, totalPatient.totalBio, totalTac.cantPatientTac
+      from ( select count(distinct p.id_patient) as cantPatientBio
+          from patient p inner join patientcbp p2 on p.id_patient = p2.id_patient 
+          inner join biopsycbp b on b.id_patient = p2.id_patient) as patientBio,
+      
+          (select count(p.id_patient) as totalBio
+          from patient p inner join patientcbp p2 on p.id_patient = p2.id_patient ) as totalPatient,
+      
+          (select count(distinct p.id_patient) as cantPatientTac
+          from patient p inner join patientcbp p2 on p.id_patient = p2.id_patient 
+          inner join ldct l on l.id_patient = p.id_patient ) as totalTac
+    `);
+  })
+    .then(data => {
+      res.status(200).json({ data })
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({ err, msg: "Ha ocurrido un error" })
+    })
+}
+
 
 functionQueries.getListPatientCbpForstatistics = function (req, res) {
   //query encargada de obtener al usuario
