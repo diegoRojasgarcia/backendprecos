@@ -957,6 +957,21 @@ functionQueries.familyDelete = (req, res) => {
     })
 };
 
+functionQueries.getAlcohol = function (req, res) {//query encargada de obtener al usuario
+  connection.tx(function (t) {
+    return t.any("Select alcohol from alcoholtype order by alcohol  ");
+  }).then(function (data) {
+    res.status(200).json({
+      data: data
+    });
+  })["catch"](function (err) {
+    res.status(500).json({
+      err: err,
+      msg: "Ha ocurrido un error"
+    });
+  });
+};
+
 
 export default functionQueries;
 

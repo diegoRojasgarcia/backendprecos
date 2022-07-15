@@ -78,7 +78,7 @@ router.post("/GetRiskSurveyFamilyCancerById", helpers.isAutenticated,db.getRiskS
 
 
 router.delete("/familyDelete", helpers.isAutenticated,db.familyDelete);
-
+router.get("/GetAlcohol", helpers.isAutenticated, db.getAlcohol);
 
 
 
