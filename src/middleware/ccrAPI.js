@@ -466,6 +466,8 @@ functionQueries.UpdateRiskSurveyHabits = function (req, res, next) {//query enca
     });
   });
 };
+
+
 functionQueries.RegisterRiskSurveyFamily = function (req, res, next) {//query encargada de ingresar los usuarios
 
   var idPatient = req.body.idPatient;
