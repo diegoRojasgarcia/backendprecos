@@ -28,9 +28,11 @@ var Deceased = req.body.deceased;
 var Fonasa = req.body.fonasa;
 var volunteerAgreement= req.body.volunteerAgreement;
 var deceasedByCancer = req.body.deceasedByCancer;
+var isapre = req.body.isapre;
+var extranjero = req.body.extranjero;
 
 connection.tx(function (t) {
-  return t.any("INSERT INTO patient(rut, name, last_name, last_name2, sex, nationality, birthday, region, previous_region, commune, medical_facility, cesfam, address, village, residence_time, cellphone, mail, marital_state, emergency_phone, deceased, fonasa, volunteer_agreement, deceased_by_cancer) VALUES ( $1 , $2 , $3 , $4 , $5,$6, $7, $8, $9,$10, $11, $12, $13,$14, $15, $16, $17,$18, $19, $20, $21,$22, $23) RETURNING id_patient", [ Rut, Name, LastName, LastName2, Sex,Nationality,Birthday,Region,previousRegion,Commune,medicalFacility,Cesfam,Address,Village,residenceTime,Cellphone,Mail,MaritalState,emergencyPhone,Deceased,Fonasa,volunteerAgreement, deceasedByCancer]);
+  return t.any("INSERT INTO patient(rut, name, last_name, last_name2, sex, nationality, birthday, region, previous_region, commune, medical_facility, cesfam, address, village, residence_time, cellphone, mail, marital_state, emergency_phone, deceased, fonasa, volunteer_agreement, deceased_by_cancer,isapre, extranjero) VALUES ( $1 , $2 , $3 , $4 , $5,$6, $7, $8, $9,$10, $11, $12, $13,$14, $15, $16, $17,$18, $19, $20, $21,$22, $23,24$,25$) RETURNING id_patient", [ Rut, Name, LastName, LastName2, Sex,Nationality,Birthday,Region,previousRegion,Commune,medicalFacility,Cesfam,Address,Village,residenceTime,Cellphone,Mail,MaritalState,emergencyPhone,Deceased,Fonasa,volunteerAgreement, deceasedByCancer,isapre,extranjero]);
 }).then(function (data) {
   res.status(200).json({
     data:data,
