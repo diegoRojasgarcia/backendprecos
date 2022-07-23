@@ -207,7 +207,7 @@ functionQueries.getSurveyCBP = function (req, res) {//query encargada de obtener
 functionQueries.getSurveyCCR = function (req, res) {//query encargada de obtener al usuario
 
   connection.tx(function (t) {
-    return t.any("SELECT type, msg, name from surveyCCR");
+    return t.any("SELECT type, msg, name from surveyCCR order by id_survey");
   }).then(function (data) {
     res.status(200).json({
       data: data
