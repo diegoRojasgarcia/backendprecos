@@ -122,8 +122,8 @@ functionQueries.RegisterEnrollmentSurveyCCR = function (req, res, next) {
           msg: "El paciente NO puede ingresar al programa de detección temprana del cáncer colorectal ya que no cumple con los criterios de inclusión, el paciente debe tomar hora urgente con gastroenterología en su consultorio."
         });
       } else {
-        functionQueries.InsertStatePatientccr(Id_Patient, "Rechazado", "El paciente NO puede ingresar al programa de detección temprana del cáncer colorectal ya que cuenta con un estudio completo realizado, por lo que no necesita otro.");
         if (colonoscopy == 1) {
+          functionQueries.InsertStatePatientccr(Id_Patient, "Rechazado", "El paciente NO puede ingresar al programa de detección temprana del cáncer colorectal ya que cuenta con un estudio completo realizado, por lo que no necesita otro.");
           res.status(200).json({
             msg: "El paciente NO puede ingresar al programa de detección temprana del cáncer colorectal ya que usted cuenta con un estudio completo realizado, por lo que no necesita otro."
           });
@@ -210,22 +210,22 @@ functionQueries.UpdateEnrollmentSurveyCCR = function (req, res, next) {//query e
       });
     }
     else {
-      functionQueries.UpdateStatePatientccr(Id_Patient, "Rechazado");
       if (BleedingInStools == 1 | AlterationOfBowelHabits == 1 | AbdominalPain == 1 | weightLoss == 1) {
+        functionQueries.UpdateStatePatientccr(Id_Patient, "Rechazado", "El paciente NO puede ingresar al programa de detección temprana del cáncer colorectal ya que no cumple con los criterios de inclusión, el paciente debe tomar hora urgente con gastroenterología en su consultorio.");
         res.status(200).json({
-          msg: "Actualizado correctamente."
+          msg: "Se ha actualizado el estado del paciente a 'Rechazado'"
         });
       }
       else {
         if (colonoscopy == 1) {
+          functionQueries.UpdateStatePatientccr(Id_Patient, "Rechazado", "El paciente NO puede ingresar al programa de detección temprana del cáncer colorectal ya que cuenta con un estudio completo realizado, por lo que no necesita otro.");
           res.status(200).json({
-            msg: "Actualizado correctamente."
-          });
+            msg: "Se ha actualizado el estado del paciente a 'Rechazado'"          });
         }
         else {
+          functionQueries.UpdateStatePatientccr(Id_Patient, "Rechazado", "El paciente NO puede ingresar al programa de detección temprana del cáncer colorectal ya que no cumple con los criterios de inclusión");
           res.status(200).json({
-            msg: "Actualizado correctamente."
-          });
+            msg: "Se ha actualizado el estado del paciente a 'Rechazado'"          });
         }
       }
     }
@@ -275,7 +275,7 @@ functionQueries.InsertStatePatientccr = function (IdPatient, State, motivorechaz
   })
 
 };
-functionQueries.UpdateStatePatientccr = function (IdPatient, State,  next) {//query encargada de ingresar los usuarios
+functionQueries.UpdateStatePatientccr = function (IdPatient, State, motivorechazo,  next) {//query encargada de ingresar los usuarios
 
   var State = State;
   var Id_Patient = IdPatient;
